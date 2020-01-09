@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="92b42f90-bd32-4989-beba-54865c626822" >
+		<http:listener-connection host="0.0.0.0" port="8086" />
+	</http:listener-config>
+	<flow name="joelFlow" doc:id="901bafb0-001d-40c9-8a40-2b503c5186f1" >
+		<http:listener doc:name="Listener" doc:id="6a5a469e-19e6-4184-88d2-5636c0923a34" config-ref="HTTP_Listener_config" path="/path"/>
+		<set-payload value="#[&quot;Hello&quot; ++ attributes.queryParams.name ++ ' thanks for visting us!' ++ &quot;today is&quot; ++ now() as String {format: &quot;y-MM-dd&quot;}]" doc:name="Set Payload" doc:id="39871997-41cb-4971-94fe-471100ce7a58" />
+		<logger level="INFO" doc:name="Logger" doc:id="e6f42c5e-36e7-4d0b-8748-35bff346afd3" message="#[payload]"/>
+	</flow>
+</mule>
